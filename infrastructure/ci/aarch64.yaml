@@ -1,0 +1,23 @@
+# AION CI — AArch64 pipeline (runs on native ARM runners; QEMU only
+# for boot smoke tests, never for performance claims)
+stages: [lint, test, build]
+variables: {CARGO_TERM_COLOR: always}
+lint:
+  stage: lint
+  image: rust:1.100
+  tags: [aarch64]
+  script:
+    - cd core && cargo fmt --check && cargo clippy --all-targets -- -D warnings
+test:
+  stage: test
+  image: rust:1.100
+  tags: [aarch64]
+  script:
+    - cd core && cargo test --locked
+    - bash ../scripts/check-compat-matrix.sh
+build:
+  stage: build
+  image: rust:1.100
+  tags: [aarch64]
+  script:
+    - cd core && cargo build --release --locked

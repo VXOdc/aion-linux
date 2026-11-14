@@ -1,0 +1,13 @@
+# AION Server edition: headless model serving
+pkgname=aion-edition-server
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="AION Server edition metapackage - headless inference server"
+arch=('any')
+license=('MIT')
+depends=(
+  'aion-core'
+  'openssh'
+  'podman'
+  'caddy'
+)

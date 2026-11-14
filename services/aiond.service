@@ -1,0 +1,22 @@
+[Unit]
+Description=AION core system service
+Documentation=https://gitlab.archlinux.org/aion/aion-linux
+After=systemd-modules-load.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/aiond
+Restart=on-failure
+RestartSec=5
+# Hardening per ADR-004 (systemd sandboxing for the daemon)
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=false
+ReadWritePaths=/run/aion
+CapabilityBoundingSet=
+
+[Install]
+WantedBy=multi-user.target

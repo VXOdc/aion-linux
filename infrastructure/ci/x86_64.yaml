@@ -1,0 +1,26 @@
+# AION CI — x86_64 pipeline
+stages: [lint, test, build, package]
+variables: {CARGO_TERM_COLOR: always}
+lint:
+  stage: lint
+  image: rust:1.100
+  script:
+    - cd core && cargo fmt --check
+    - cargo clippy --all-targets -- -D warnings
+test:
+  stage: test
+  image: rust:1.100
+  script:
+    - cd core && cargo test --locked
+    - bash ../scripts/check-compat-matrix.sh
+build:
+  stage: build
+  image: rust:1.100
+  script:
+    - cd core && cargo build --release --locked
+  artifacts: {paths: [core/target/release/aion, core/target/release/aiond]}
+package:
+  stage: package
+  image: archlinux/archlinux:base-devel
+  script:
+    - cd packages/aion-core && makepkg --syncdeps --noconfirm || echo "packaging lands with Milestone 2 repos"

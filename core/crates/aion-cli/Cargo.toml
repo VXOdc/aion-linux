@@ -1,0 +1,20 @@
+[package]
+name = "aion-cli"
+description = "AION command-line interface"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "aion"
+path = "src/main.rs"
+
+[dependencies]
+aion-types = { path = "../aion-types" }
+aion-hardware = { path = "../aion-hardware" }
+aion-models = { path = "../aion-models" }
+aion-runtime = { path = "../aion-runtime" }
+anyhow = { workspace = true }
+clap = { workspace = true }
+serde_json = { workspace = true }

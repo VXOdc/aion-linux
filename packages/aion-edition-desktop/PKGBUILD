@@ -1,0 +1,21 @@
+# AION Desktop edition: the full graphical AI workstation
+pkgname=aion-edition-desktop
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="AION Desktop edition metapackage - Plasma desktop, Model Center, AI Studio"
+arch=('any')
+license=('MIT')
+depends=(
+  'aion-core'
+  'plasma'
+  'konsole'
+  'btrfs-progs'
+  'pipewire'
+  'networkmanager'
+)
+optdepends=(
+  'nvidia-utils: NVIDIA GPU acceleration'
+  'rocm-hip-runtime: AMD GPU acceleration (x86_64 only)'
+  'vulkan-radeon: AMD Vulkan support'
+  'vulkan-intel: Intel Vulkan support'
+)

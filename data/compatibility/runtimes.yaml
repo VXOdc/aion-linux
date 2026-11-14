@@ -1,0 +1,32 @@
+# AION runtime compatibility matrix - source of truth.
+# The Rust registry in core/crates/aion-runtime mirrors this file; CI
+# (infrastructure/ci/check-compat-matrix.sh) verifies they stay in sync.
+# A runtime is only advertised when a rule below matches the hardware.
+# Never add a rule that has not been tested on real hardware.
+runtimes:
+  - id: llama.cpp
+    executable: llama-server
+    workloads: [llm-inference, embeddings]
+    backends:
+      - {backend: cpu,     arch: [x86_64, aarch64], vendors: []}
+      - {backend: cuda,    arch: [x86_64, aarch64], vendors: [nvidia]}
+      - {backend: vulkan,  arch: [x86_64, aarch64], vendors: [amd, intel, nvidia]}
+      # ROCm is x86_64 only - see documentation/decisions/ADR-002-rocm-arm64.md
+      - {backend: rocm,    arch: [x86_64],          vendors: [amd]}
+  - id: ollama
+    executable: ollama
+    workloads: [llm-inference, embeddings]
+    backends:
+      - {backend: cpu,     arch: [x86_64, aarch64], vendors: []}
+      - {backend: cuda,    arch: [x86_64, aarch64], vendors: [nvidia]}
+  - id: vllm
+    executable: vllm
+    workloads: [llm-inference]
+    backends:
+      - {backend: cpu,     arch: [x86_64, aarch64], vendors: []}
+      - {backend: cuda,    arch: [x86_64, aarch64], vendors: [nvidia]}
+  - id: onnxruntime
+    executable: onnxruntime
+    workloads: [llm-inference, speech-recognition, embeddings]
+    backends:
+      - {backend: cpu,     arch: [x86_64, aarch64], vendors: []}

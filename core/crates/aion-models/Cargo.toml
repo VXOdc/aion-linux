@@ -1,0 +1,12 @@
+[package]
+name = "aion-models"
+description = "Model library management: GGUF parsing, local model store, memory estimates"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+aion-types = { path = "../aion-types" }
+anyhow = { workspace = true }
+serde = { workspace = true }

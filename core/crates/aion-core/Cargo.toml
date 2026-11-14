@@ -1,0 +1,17 @@
+[package]
+name = "aion-core"
+description = "aiond — the AION core system daemon (Milestone 3 skeleton)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "aiond"
+path = "src/main.rs"
+
+[dependencies]
+aion-types = { path = "../aion-types" }
+aion-hardware = { path = "../aion-hardware" }
+anyhow = { workspace = true }
+serde_json = { workspace = true }

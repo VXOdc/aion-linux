@@ -1,0 +1,43 @@
+# Maintainer: Noah Ly <noah@aion-linux.invalid>
+pkgname=aion-core
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="AION core system management platform: aiond daemon and aion CLI"
+arch=('x86_64' 'aarch64')
+url="https://gitlab.archlinux.org/aion/aion-linux"
+license=('MIT')
+depends=('gcc-libs' 'systemd')
+makedepends=('cargo' 'clang')
+source=("git+https://gitlab.archlinux.org/aion/aion-linux.git#tag=v${pkgver}")
+sha256sums=('SKIP')
+
+prepare() {
+  cd "${srcdir}/aion-linux/core"
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+  cd "${srcdir}/aion-linux/core"
+  export CARGO_TARGET_DIR=target
+  cargo build --release --locked
+}
+
+check() {
+  cd "${srcdir}/aion-linux/core"
+  cargo test --release --locked
+}
+
+package() {
+  cd "${srcdir}/aion-linux/core"
+  # Binaries
+  install -Dm755 target/release/aiond "${pkgdir}/usr/bin/aiond"
+  install -Dm755 target/release/aion "${pkgdir}/usr/bin/aion"
+  # systemd unit
+  install -Dm644 "${srcdir}/aion-linux/services/aiond.service" \
+    "${pkgdir}/usr/lib/systemd/system/aiond.service"
+  # Default directories (model store is created at first boot, not here)
+  install -d "${pkgdir}/var/lib/aion"
+  # License
+  install -Dm644 "${srcdir}/aion-linux/LICENSE" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

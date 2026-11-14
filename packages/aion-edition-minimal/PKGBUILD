@@ -1,0 +1,8 @@
+# AION Minimal edition: just the core, no desktop
+pkgname=aion-edition-minimal
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="AION Minimal edition metapackage - aion-core and base tools only"
+arch=('any')
+license=('MIT')
+depends=('aion-core')
